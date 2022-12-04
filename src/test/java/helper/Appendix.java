@@ -18,5 +18,15 @@ public class Appendix {
 		return new Object[][] {{"us","United States","70050"}, {"au", "Australia", "0200"}, {"dk","Denmark", "0800"}};
 	}
 			
-			
+		
+	@DataProvider(name="zipCodeCountData")
+	public static Object[][] zipCodeCount()
+	{
+//		country code, lower limit, higher limit, number of valid zipCodes
+		return new Object[][] {
+//			{"is", "101", "902", 148,},
+			{"gy","97312","97360",8}
+		
+		};
+	}
 }

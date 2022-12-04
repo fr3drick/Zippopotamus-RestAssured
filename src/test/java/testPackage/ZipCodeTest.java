@@ -1,3 +1,4 @@
+package testPackage;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import helper.Appendix;
@@ -39,6 +40,41 @@ public class ZipCodeTest {
 		Assert.assertEquals(countryInResponse, country, "country name mismatch");
 		Assert.assertEquals(zipCodeInResponse, zip, "zipcode mismatch");
 		
+	}
+	
+	
+	@Test(dataProvider="zipCodeCountData", dataProviderClass=Appendix.class)
+	public void zipCodeCount(String code, String minZip, String maxZip, int count) {
+		//This is to verify that the number of valid zipCodes in range as as stated in documentation
+		//only for numeric zipCodes that don't start with 0
+		//country code, number of zipCodes, min zipCode and max zipCode are parameters
+		
+		
+		int minZipInt = Integer.parseInt(minZip);
+		int maxZipInt = Integer.parseInt(maxZip);
+		int countOfZipCodes = 0;
+
+		
+		for(int zip = minZipInt; zip <= maxZipInt; zip++) {
+		RestAssured.basePath = "/"+code+"/"+zip;
+		
+		String body =
+		when().get()
+		
+		.then()
+		.extract().body().asString();
+		
+		JsonPath js = getJson(body);
+		
+		//This checks if zipCode queried is valid and increments countOfZipCodes
+		if(!(js.getString("'post code'")==null)) {
+			countOfZipCodes++;
+		}
+			
+		} //end of for loop
+		
+		Assert.assertEquals(countOfZipCodes, count, "number of valid zipCodes in range does not match" );
+		System.out.println("count of valid zipCodes in range is "+countOfZipCodes);
 	}
 
 }
