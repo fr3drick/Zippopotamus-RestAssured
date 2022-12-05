@@ -24,8 +24,9 @@ public class Appendix {
 	{
 //		country code, lower limit, higher limit, number of valid zipCodes
 		return new Object[][] {
-//			{"is", "101", "902", 148,},
-			{"gy","97312","97360",8}
+			{"mq", "97200", "97290", 29},
+			{"gy","97312","97360",8},
+			{"li","9485", "9498", 13}
 		
 		};
 	}
